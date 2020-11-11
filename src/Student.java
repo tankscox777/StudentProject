@@ -1,5 +1,112 @@
 public class Student {
-    public static void main(String[] args) {
+    private String name;       // Имя
+    private String surname;    // Фамилия
+    private int age;           // Возраст
+    private int numGroup;      // Номер группы
+    private int cntTask;       // Кол-во решенных задач
+    private int cntModule;     // Колв-во пройденных модулей
+    private String experience; // Опыт
 
+    public static void main(String[] args) {
+        Student newStudent = new Student("Andrey", "Kolosov", 23);
+        System.out.println(newStudent.getDataStudent(newStudent));
+    }
+
+    // Общий конструктор класса Student
+    public Student(String name, String surname, int age, int numGroup, int cntTask, int cntModule, String experience) {
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.numGroup = numGroup;
+        this.cntTask = cntTask;
+        this.cntModule = cntModule;
+        this.experience = experience;
+    }
+
+    // Короткий конструктор класса Student
+    public Student(String name, String surname, int age) {
+        this(name, surname, age, 0, 0, 0, "отсутствует");
+    }
+
+    // Метод для получения данных по студенту
+    public String getDataStudent(Student student) {
+        return "Группа - " + student.numGroup + " | " + student.surname + " " + student.name + " (" + student.age + "), опыт - " + student.experience +
+                " | Решенных задач - " + student.cntTask + ", решенных модулей - " + student.cntModule;
+    }
+
+    // Метод - выполнить задание
+    public void performTask() {
+
+    }
+
+    // Метод - задать вопрос
+    public void askQuestion() {
+
+    }
+
+    // Метод - пройти модуль
+    public void passModule() {
+
+    }
+
+    // Метод - пообщаться с куратором
+    public void chatCurator() {
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getNumGroup() {
+        return numGroup;
+    }
+
+    public void setNumGroup(int numGroup) {
+        this.numGroup = numGroup;
+    }
+
+    public int getCntTask() {
+        return cntTask;
+    }
+
+    public void setCntTask(int cntTask) {
+        this.cntTask = cntTask;
+    }
+
+    public int getCntModule() {
+        return cntModule;
+    }
+
+    public void setCntModule(int cntModule) {
+        this.cntModule = cntModule;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
     }
 }
