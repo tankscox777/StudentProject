@@ -6,6 +6,9 @@ public class Student {
     private int cntTask;       // Кол-во решенных задач
     private int cntModule;     // Колв-во пройденных модулей
     private String experience; // Опыт
+    private static int cntTaskAll; // Кол-во решенных задач всеми студентами
+    private static int maxCompletedModule; // Максимальное кол-во модулей, пройденных студентами
+    private static final int MAX_MODULE_COUNT = 20; // Максимальное количество модулей
 
     public static void main(String[] args) {
         Student newStudent = new Student("Andrey", "Kolosov", 23);
@@ -36,16 +39,27 @@ public class Student {
 
     // Метод - выполнить задание
     public void performTask() {
-
-    }
-
-    // Метод - задать вопрос
-    public void askQuestion() {
-
+        System.out.println("Задание выполнено");
+        cntTask++;
+        cntTaskAll++;
     }
 
     // Метод - пройти модуль
     public void passModule() {
+        if (cntModule < MAX_MODULE_COUNT) {
+            cntModule++;
+            System.out.println("Модуль пройден");
+            // Обновляем максимальное кол-во модулей, пройденных студентами
+            if (cntModule > maxCompletedModule) {
+                maxCompletedModule = cntModule;
+            }
+        } else {
+            System.out.println("Поздравляем! Все модули пройдены!");
+        }
+    }
+
+    // Метод - задать вопрос
+    public void askQuestion() {
 
     }
 
