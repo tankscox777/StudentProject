@@ -1,7 +1,4 @@
-public class Student {
-    private String name;       // Имя
-    private String surname;    // Фамилия
-    private int age;           // Возраст
+public class Student extends Person {
     private int numGroup;      // Номер группы
     private int cntTask;       // Кол-во решенных задач
     private int cntModule;     // Колв-во пройденных модулей
@@ -17,9 +14,7 @@ public class Student {
 
     // Общий конструктор класса Student
     public Student(String name, String surname, int age, int numGroup, int cntTask, int cntModule, String experience) {
-        this.name = name;
-        this.surname = surname;
-        this.age = age;
+        super(name, surname, age);
         this.numGroup = numGroup;
         this.cntTask = cntTask;
         this.cntModule = cntModule;
@@ -33,7 +28,7 @@ public class Student {
 
     // Метод для получения данных по студенту
     public String getDataStudent(Student student) {
-        return "Группа - " + student.numGroup + " | " + student.surname + " " + student.name + " (" + student.age + "), опыт - " + student.experience +
+        return "Группа - " + student.numGroup + " | " + student.getSurname() + " " + student.getName() + " (" + student.getAge() + "), опыт - " + student.experience +
                 " | Решенных задач - " + student.cntTask + ", решенных модулей - " + student.cntModule;
     }
 
@@ -68,30 +63,6 @@ public class Student {
 
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public int getNumGroup() {
         return numGroup;
     }
@@ -122,5 +93,29 @@ public class Student {
 
     public void setExperience(String experience) {
         this.experience = experience;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getSurname() {
+        return this.surname;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getAge() {
+        return this.age;
     }
 }
