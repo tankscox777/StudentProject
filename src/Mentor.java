@@ -1,5 +1,4 @@
 public class Mentor extends Person {
-
     public Mentor(String name, String surname, int age) {
         super(name, surname, age);
     }
@@ -26,5 +25,14 @@ public class Mentor extends Person {
 
     public int getAge() {
         return this.age;
+    }
+
+    @Override
+    public String toString() {
+        return "Mentor{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

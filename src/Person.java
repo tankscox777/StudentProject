@@ -20,4 +20,6 @@ abstract class Person {
     abstract int getAge();
 
     abstract void setAge(int age);
+
+    abstract public String toString();
 }
