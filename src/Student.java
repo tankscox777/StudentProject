@@ -1,5 +1,8 @@
+import java.util.Objects;
+
 public class Student extends Person {
     private int numGroup;      // Номер группы
+    private String nameCourse; // Имя курса
     private int cntTask;       // Кол-во решенных задач
     private int cntModule;     // Колв-во пройденных модулей
     private String experience; // Опыт
@@ -8,14 +11,23 @@ public class Student extends Person {
     private static final int MAX_MODULE_COUNT = 20; // Максимальное количество модулей
 
     public static void main(String[] args) {
-        Student newStudent = new Student("Andrey", "Kolosov", 23);
-        System.out.println(newStudent.getDataStudent(newStudent));
+        Student newStudent1 = new Student("Andrey", "Kolosov", 23);
+        System.out.println(newStudent1.getDataStudent());
+        Student newStudent2 = new Student("Liza", "Pavlova", 19);
+        System.out.println(newStudent2.getDataStudent());
+        // Проверим, разные ли студенты
+        if (newStudent1.equals(newStudent2)) {
+            System.out.printf("Студенты 1 (hashCode: %d) и 2 (hashCode: %d) одинаковые!", newStudent1.hashCode(), newStudent2.hashCode());
+        } else {
+            System.out.printf("Студенты 1 (hashCode: %d) и 2 (hashCode: %d) разные!", newStudent1.hashCode(), newStudent2.hashCode());
+        }
     }
 
     // Общий конструктор класса Student
-    public Student(String name, String surname, int age, int numGroup, int cntTask, int cntModule, String experience) {
+    public Student(String name, String surname, int age, int numGroup, String nameCourse, int cntTask, int cntModule, String experience) {
         super(name, surname, age);
         this.numGroup = numGroup;
+        this.nameCourse = nameCourse;
         this.cntTask = cntTask;
         this.cntModule = cntModule;
         this.experience = experience;
@@ -23,13 +35,18 @@ public class Student extends Person {
 
     // Короткий конструктор класса Student
     public Student(String name, String surname, int age) {
-        this(name, surname, age, 0, 0, 0, "отсутствует");
+        this(name, surname, age, 0, "Android", 0, 0, "отсутствует");
     }
 
     // Метод для получения данных по студенту
-    public String getDataStudent(Student student) {
-        return "Группа - " + student.numGroup + " | " + student.getSurname() + " " + student.getName() + " (" + student.getAge() + "), опыт - " + student.experience +
+    public static String getDataStudent(Student student) {
+        return student.getNameCourse() + ": " + "группа - " + student.numGroup + " | " + student.getSurname() + " " + student.getName() + " (" + student.getAge() + "), опыт - " + student.experience +
                 " | Решенных задач - " + student.cntTask + ", решенных модулей - " + student.cntModule;
+    }
+
+    public String getDataStudent() {
+        return this.getNameCourse() + ": " + "группа - " + this.numGroup + " | " + this.getSurname() + " " + this.getName() + " (" + this.getAge() + "), опыт - " + this.experience +
+                " | Решенных задач - " + this.cntTask + ", решенных модулей - " + this.cntModule;
     }
 
     // Метод - выполнить задание
@@ -95,6 +112,14 @@ public class Student extends Person {
         this.experience = experience;
     }
 
+    public String getNameCourse() {
+        return nameCourse;
+    }
+
+    public void setNameCourse(String nameCourse) {
+        this.nameCourse = nameCourse;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -117,5 +142,22 @@ public class Student extends Person {
 
     public int getAge() {
         return this.age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student)) return false;
+        Student student = (Student) o;
+        return this.getAge() == student.getAge() &&
+                Objects.equals(this.getName(), student.getName()) &&
+                Objects.equals(this.getSurname(), student.getSurname()) &&
+                Objects.equals(this.getExperience(), student.getExperience()) &&
+                Objects.equals(this.getNameCourse(), student.getNameCourse());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getName(), this.getSurname(), this.getAge(), this.getExperience(), this.getNameCourse());
     }
 }
