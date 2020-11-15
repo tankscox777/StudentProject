@@ -1,8 +1,15 @@
 import java.util.Objects;
 
 public class Student extends Person {
+    public enum Discipline {
+        JAVA,
+        PYTHON,
+        WEB,
+        UX,
+        PROJECT_MANAGEMENT;
+    }
     private int numGroup;      // Номер группы
-    private String nameCourse; // Имя курса
+    private Discipline nameCourse; // Имя курса
     private int cntTask;       // Кол-во решенных задач
     private int cntModule;     // Колв-во пройденных модулей
     private String experience; // Опыт
@@ -11,18 +18,18 @@ public class Student extends Person {
     private static final int MAX_MODULE_COUNT = 20; // Максимальное количество модулей
 
     // Общий конструктор класса Student
-    public Student(String name, String surname, int age, int numGroup, String nameCourse, int cntTask, int cntModule, String experience) {
+    public Student(String name, String surname, int age, int numGroup, Discipline discipline, int cntTask, int cntModule, String experience) {
         super(name, surname, age);
         this.numGroup = numGroup;
-        this.nameCourse = nameCourse;
+        this.nameCourse = discipline;
         this.cntTask = cntTask;
         this.cntModule = cntModule;
         this.experience = experience;
     }
 
     // Короткий конструктор класса Student
-    public Student(String name, String surname, int age) {
-        this(name, surname, age, 0, "Android", 0, 0, "отсутствует");
+    public Student(String name, String surname, int age, Discipline discipline) {
+        this(name, surname, age, 0, discipline, 0, 0, "отсутствует");
     }
 
     // Метод для получения данных по студенту
@@ -100,11 +107,11 @@ public class Student extends Person {
     }
 
     public String getNameCourse() {
-        return nameCourse;
+        return nameCourse.name();
     }
 
-    public void setNameCourse(String nameCourse) {
-        this.nameCourse = nameCourse;
+    public void setNameCourse(Discipline discipline) {
+        this.nameCourse = discipline;
     }
 
     public void setName(String name) {
