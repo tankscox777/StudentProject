@@ -1,171 +1,71 @@
-import java.util.Objects;
-
 public class Student extends Person {
-    public enum Discipline {
-        JAVA,
-        PYTHON,
-        WEB,
-        UX,
-        PROJECT_MANAGEMENT;
-    }
-    private int numGroup;      // Номер группы
-    private Discipline nameCourse; // Имя курса
-    private int cntTask;       // Кол-во решенных задач
-    private int cntModule;     // Колв-во пройденных модулей
-    private String experience; // Опыт
-    private static int cntTaskAll; // Кол-во решенных задач всеми студентами
-    private static int maxCompletedModule; // Максимальное кол-во модулей, пройденных студентами
-    private static final int MAX_MODULE_COUNT = 20; // Максимальное количество модулей
+    private int cntCompletedTask; // Кол-во решенных задач
+    private boolean completedTaskAll; // Флаг того, что студент решил все задания
+    private Mentor mentor; // Ментор
+    private static int cntCompletedTaskStudent = 0; // Кол-во решенных задач всеми студентами
 
-    // Общий конструктор класса Student
-    public Student(String name, String surname, int age, int numGroup, Discipline discipline, int cntTask, int cntModule, String experience) {
+    // Консруктор класса Student
+    public Student(String name, String surname, int age, Mentor mentor) {
         super(name, surname, age);
-        this.numGroup = numGroup;
-        this.nameCourse = discipline;
-        this.cntTask = cntTask;
-        this.cntModule = cntModule;
-        this.experience = experience;
+        this.cntCompletedTask = 0;
+        this.completedTaskAll = false;
+        this.mentor = mentor;
     }
 
-    // Короткий конструктор класса Student
-    public Student(String name, String surname, int age, Discipline discipline) {
-        this(name, surname, age, 0, discipline, 0, 0, "отсутствует");
+    public int getCntCompletedTask() {
+        return cntCompletedTask;
     }
 
-    // Метод для получения данных по студенту
-    public static String getDataStudent(Student student) {
-        return student.getNameCourse() + ": " + "группа - " + student.numGroup + " | " + student.getSurname() + " " + student.getName() + " (" + student.getAge() + "), опыт - " + student.experience +
-                " | Решенных задач - " + student.cntTask + ", решенных модулей - " + student.cntModule;
+    public void setCntCompletedTask(int cntCompletedTask) {
+        this.cntCompletedTask = cntCompletedTask;
     }
 
-    public String getDataStudent() {
-        return this.getNameCourse() + ": " + "группа - " + this.numGroup + " | " + this.getSurname() + " " + this.getName() + " (" + this.getAge() + "), опыт - " + this.experience +
-                " | Решенных задач - " + this.cntTask + ", решенных модулей - " + this.cntModule;
+    public boolean isCompletedTaskAll() {
+        return completedTaskAll;
     }
 
-    // Метод - выполнить задание
-    public void performTask() {
-        System.out.println("Задание выполнено");
-        cntTask++;
-        cntTaskAll++;
+    public static int getCntCompletedTaskStudent() {
+        return cntCompletedTaskStudent;
     }
 
-    // Метод - пройти модуль
-    public void passModule() {
-        if (cntModule < MAX_MODULE_COUNT) {
-            cntModule++;
-            System.out.println("Модуль пройден");
-            // Обновляем максимальное кол-во модулей, пройденных студентами
-            if (cntModule > maxCompletedModule) {
-                maxCompletedModule = cntModule;
-            }
+    public Mentor getMentor() {
+        return mentor;
+    }
+
+    public void setMentor(Mentor mentor) {
+        this.mentor = mentor;
+    }
+
+    // Метод - решить задачи
+    public void solveTasks(int cntTask, Task[] arrTask) {
+        int end = Math.min(this.cntCompletedTask + cntTask, arrTask.length);
+        // Выолняем заявленное кол-во задач
+        for (int i = this.cntCompletedTask; i < end; i++) {
+            this.solveOneTask(arrTask[i]);
+        }
+        // Проверяем, весь ли набор задач выполнил студент
+        if (this.cntCompletedTask == arrTask.length) {
+            System.out.println("Поздравляем, " + this.getName() + "! Все задачи выполнены!");
+            this.completedTaskAll = true;
         } else {
-            System.out.println("Поздравляем! Все модули пройдены!");
+            System.out.println(this.name + ", продолжайте в том же духе!");
         }
     }
 
-    // Метод - задать вопрос
-    public void askQuestion() {
-
-    }
-
-    // Метод - пообщаться с куратором
-    public void chatCurator() {
-
-    }
-
-    public int getNumGroup() {
-        return numGroup;
-    }
-
-    public void setNumGroup(int numGroup) {
-        this.numGroup = numGroup;
-    }
-
-    public int getCntTask() {
-        return cntTask;
-    }
-
-    public void setCntTask(int cntTask) {
-        this.cntTask = cntTask;
-    }
-
-    public int getCntModule() {
-        return cntModule;
-    }
-
-    public void setCntModule(int cntModule) {
-        this.cntModule = cntModule;
-    }
-
-    public String getExperience() {
-        return experience;
-    }
-
-    public void setExperience(String experience) {
-        this.experience = experience;
-    }
-
-    public String getNameCourse() {
-        return nameCourse.name();
-    }
-
-    public void setNameCourse(Discipline discipline) {
-        this.nameCourse = discipline;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getSurname() {
-        return this.surname;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getAge() {
-        return this.age;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Student)) return false;
-        Student student = (Student) o;
-        return this.getAge() == student.getAge() &&
-                Objects.equals(this.getName(), student.getName()) &&
-                Objects.equals(this.getSurname(), student.getSurname()) &&
-                Objects.equals(this.getExperience(), student.getExperience()) &&
-                Objects.equals(this.getNameCourse(), student.getNameCourse());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.getName(), this.getSurname(), this.getAge(), this.getExperience(), this.getNameCourse());
-    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", age=" + age +
-                ", numGroup=" + numGroup +
-                ", nameCourse='" + nameCourse + '\'' +
-                ", cntTask=" + cntTask +
-                ", cntModule=" + cntModule +
-                ", experience='" + experience + '\'' +
-                '}';
+    // Метод - решить задачу
+    private void solveOneTask(Task task) {
+        // Проверка на то, что задание проверяется автоматически на основе наличия интерфейса у объекта task
+        if (task instanceof AutoChecked) {
+            System.out.println("Задача №" + task.numTask + " \"" + task.textTask + "\" - выполнена!");
+        } else {
+            // Отправляем задание ментору до тех пор, пока он её не зачтёт
+            boolean result;
+            do {
+                result = this.mentor.checkCode(task);
+            } while (!result);
+        }
+        // Увеличиваем число решенных задач студентом
+        this.cntCompletedTask++;
+        cntCompletedTaskStudent++;
     }
 }

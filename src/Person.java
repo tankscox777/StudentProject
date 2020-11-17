@@ -1,4 +1,4 @@
-abstract class Person {
+public class Person {
     protected String name; // Имя
     protected String surname; // Фамилия
     protected int age; // Возраст
@@ -9,17 +9,27 @@ abstract class Person {
         this.age = age;
     }
 
-    abstract String getName();
+    public String getName() {
+        return name;
+    }
 
-    abstract void setName(String name);
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    abstract String getSurname();
+    public String getSurname() {
+        return surname;
+    }
 
-    abstract void setSurname(String surname);
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
 
-    abstract int getAge();
+    public int getAge() {
+        return age;
+    }
 
-    abstract void setAge(int age);
-
-    abstract public String toString();
+    public void setAge(int age) {
+        this.age = age;
+    }
 }
